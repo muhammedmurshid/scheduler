@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="class_schedular_tree" model="ir.ui.view">
+        <field name="name">Class Schedule</field>
+        <field name="model">class.scheduler</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="course_id"/>
+                <field name="month_of_record"/>
+            </tree>
+
+        </field>
+    </record>
+    <record id="class_schedular_basic_view" model="ir.ui.view">
+        <field name="name">Class Schedule</field>
+        <field name="model">class.scheduler</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Scheduler">
+                <header>
+                    <button string="Schedule" states="draft" class="oe_highlight"
+                            name="schedule" type="object"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="class_teacher"/>
+                            <field name="academic_head"/>
+                            <field name="course_id"/>
+                            <field name="month_of_record"/>
+                        </group>
+                    </group>
+                    <notebook position="inside">
+                        <page name="Records" string="Schedule">
+
+                            <field name="record_ids">
+                                <tree string="Records" editable="bottom">
+                                    <field name="date"/>
+                                    <field name="day"/>
+                                    <!--                                    <field name="get_day_from_date"/>-->
+                                    <field name="time_from" widget="float_time"/>
+                                    <field name="time_to" widget="float_time"/>
+                                    <field name="faculty_id"/>
+                                    <field name="subject_id"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="Re Scheduler" string="Re Schedule">
+                            <field name="re_scheduler_ids">
+                                <tree string="Re Schedule" editable="bottom">
+                                    <field name="date"/>
+                                    <field name="day"/>
+                                    <field name="time_from" widget="float_time"/>
+                                    <field name="time_to" widget="float_time"/>
+                                    <field name="faculty_id"/>
+                                    <field name="subject_id"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="Off Days" string="Holidays">
+
+                            <field name="reason_ids">
+                                <tree string="Holidays" editable="bottom">
+                                    <field name="date"/>
+                                    <field name="reason"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"
+                           widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--    <record id="seq_students_refund" model="ir.sequence">-->
+    <!--        <field name="name">Students Refund</field>-->
+    <!--        <field name="code">student.refund</field>-->
+    <!--        <field name="active">TRUE</field>-->
+    <!--        <field name="prefix">RF</field>-->
+    <!--        <field name="padding">2</field>-->
+    <!--        <field name="number_next">1</field>-->
+    <!--        <field name="number_increment">1</field>-->
+    <!--    </record>-->
+    <record model="ir.actions.act_window" id="class_schedular_view_action">
+        <field name="name">Class Schedule</field>
+        <field name="res_model">class.scheduler</field>
+        <field name="view_mode">tree,form,activity</field>
+    </record>
+    <menuitem name="Class Schedule" id="menu_class_schedular" action="class_schedular_view_action"
+              sequence="4"/>
+</odoo>

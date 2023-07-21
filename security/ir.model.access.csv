@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_class_scheduler,access_public,model_class_scheduler,,1,1,1,1
+access_class_records_scheduler,access_public,model_class_records_scheduler,,1,1,1,1
+access_class_re_scheduler,access_public,model_class_rescheduler,,1,1,1,1
+access_holiday_reason,access_public,model_off_day_reasons,,1,1,1,1
