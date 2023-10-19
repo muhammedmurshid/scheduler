@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_month_record_for_students" model="ir.actions.report">
+        <field name="name">Month Time Table</field>
+        <field name="model">class.scheduler</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scheduler.report_students_time_table</field>
+        <field name="report_file">scheduler.report_students_time_table</field>
+        <field name="print_report_name">'Scheduler - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_class_scheduler"/>
+    </record>
+    <report
+            id="report_estate_card"
+            model="class.scheduler"
+            string="PDF Report"
+            name="scheduler.report_students_time_table"
+            file="scheduler.report_students_time_table"
+            report_type="qweb-pdf"/>
+    <template id="report_students_time_table">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h3 class="text-center">Class Time Table</h3>
+                    <br></br>
+
+                    <!--                    <t t-foreach="docs" t-as="doc">-->
+                    <!--                        <div align="center">-->
+
+                    <!--                            <img t-att-src="'data:image/png;base64,%s' % to_text(doc.company_id.logo)"-->
+                    <!--                                 style="width:30%; max-height:150pt;max-width:100pt;"/>-->
+
+                    <!--                        </div>-->
+                    <!--                    </t>-->
+
+
+                    <table class="table table-bordered mt32">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <span>Class Name</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Course</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Month</span>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="o">
+                                <tr class="text-center">
+                                    <td>
+                                        <span t-field="o.class_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.course_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.month_of_record"/>
+                                    </td>
+
+                                    <!--                                    <td><span t-field="o.latest_version"/></td>-->
+                                    <!--                                    <td><span t-field="o.name"/></td>-->
+                                    <!--                                    <td><span t-field="o.website"/></td>-->
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h2 class="text-center">Class</h2>
+                    <table class="table table-bordered mt32">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <span>Date</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Day</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Time From</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Time To</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Faculty</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Subject</span>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs.record_ids" t-as="o">
+                                <tr class="text-center">
+                                    <td>
+                                        <span t-field="o.date"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.day"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.time_from"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.time_to"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.faculty_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.subject_id.name"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="month_time_table_for_faculty" model="ir.actions.report">
+        <field name="name">Month Time Table</field>
+        <field name="model">faculty.search.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scheduler.class_time_table_for_faculty</field>
+        <field name="report_file">scheduler.class_time_table_for_faculty</field>
+        <field name="print_report_name">'Scheduler - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_faculty_search_wizard"/>
+    </record>
+    <template id="class_time_table_for_faculty">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h3 class="text-center">Class Time Table</h3>
+                    <br></br>
+                    <table class="table table-bordered mt32">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <span>Class Name</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Course</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Month</span>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs.record_id" t-as="o">
+                                <tr class="text-center">
+                                    <td>
+                                        <span t-field="o.class_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.course_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.month_of_record"/>
+                                    </td>
+
+                                    <!--                                    <td><span t-field="o.latest_version"/></td>-->
+                                    <!--                                    <td><span t-field="o.name"/></td>-->
+                                    <!--                                    <td><span t-field="o.website"/></td>-->
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h2 class="text-center">Classes</h2>
+                    <table class="table table-bordered mt32">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <span>Date</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Day</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Time From</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Time To</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Faculty</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Subject</span>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs.record_id.record_ids" t-as="o">
+                                <t t-if="o.faculty_id.id == docs.faculty_id.id">
+                                    <tr class="text-center">
+                                        <td>
+                                            <span t-field="o.date"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.day"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.time_from"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.time_to"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.faculty_id.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.subject_id.name"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

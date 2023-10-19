@@ -1,6 +1,21 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
-access_class_scheduler,access_public,model_class_scheduler,,1,1,1,1
-access_class_records_scheduler,access_public,model_class_records_scheduler,,1,1,1,1
-access_class_re_scheduler,access_public,model_class_rescheduler,,1,1,1,1
-access_holiday_reason,access_public,model_off_day_reasons,,1,1,1,1
+access_class_scheduler,access_public,model_class_scheduler,faculty.coordinator_user,1,1,1,1
+access_class_records_scheduler,access_public,model_class_records_scheduler,faculty.coordinator_user,1,1,1,1
+access_class_re_scheduler,access_public,model_class_rescheduler,faculty.coordinator_user,1,1,1,1
+access_holiday_reason,access_public,model_off_day_reasons,faculty.coordinator_user,1,1,1,1
+
+access_class_scheduler_admin,access_public,model_class_scheduler,scheduler_admin,1,1,1,1
+access_class_records_scheduler_admin,access_public,model_class_records_scheduler,scheduler_admin,1,1,1,1
+access_class_re_scheduler_admin,access_public,model_class_rescheduler,scheduler_admin,1,1,1,1
+access_holiday_reason_admin,access_public,model_off_day_reasons,scheduler_admin,1,1,1,1
+
+access_class_scheduler_head,access_public,model_class_scheduler,faculty.group_faculty_administrator,1,1,1,1
+access_class_records_scheduler_head,access_public,model_class_records_scheduler,faculty.group_faculty_administrator,1,1,1,1
+access_class_re_scheduler_head,access_public,model_class_rescheduler,faculty.group_faculty_administrator,1,1,1,1
+access_holiday_reason_head,access_public,model_off_day_reasons,faculty.group_faculty_administrator,1,1,1,1
+
+access_re_schedule_wizard,access_public,model_re_schedule_wizard,,1,1,1,1
+access_faculty_wizard,access_public,model_faculty_search_wizard,,1,1,1,1
+
+

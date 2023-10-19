@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="wizard_faculty_check_scheduler" model="ir.ui.view">
+        <field name="name">Faculty</field>
+        <field name="model">faculty.search.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Faculty">
+                <group>
+                    <group class="oe_title">
+                        <field name="faculty_id" options="{'no_create': True}"/>
+                        <field name="record_id" options="{'no_create': True}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Download" class="oe_highlight" type="object" name='action_download' icon="fa-print"/>
+                    <button string="Discard" type="object" special='cancel'/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

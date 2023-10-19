@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.module.category" id="class_scheduler_groups">
+        <field name="name">Class Scheduler</field>
+        <field name="sequence">21</field>
+        <field name="visible" eval="0"/>
+    </record>
+<!--    <record id="scheduler_coordinator" model="res.groups">-->
+<!--        <field name="name">Coordinator</field>-->
+<!--        <field name="category_id" ref="class_scheduler_groups"/>-->
+<!--    </record>-->
+    <record id="scheduler_coordinator_head" model="res.groups">
+        <field name="name">Head</field>
+        <field name="category_id" ref="class_scheduler_groups"/>
+    </record>
+    <record id="scheduler_admin" model="res.groups">
+        <field name="name">HR Manager</field>
+        <field name="category_id" ref="class_scheduler_groups"/>
+    </record>
+
+</odoo>

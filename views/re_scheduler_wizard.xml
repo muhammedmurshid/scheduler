@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="re_reason_wizard" model="ir.ui.view">
+        <field name="name">Re Scheduler</field>
+        <field name="model">re.schedule.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Re Scheduler">
+                <group>
+                    <group class="oe_title">
+                        <field name="date"/>
+                        <field name="day" readonly="1"/>
+                        <field name="time_from"/>
+                        <field name="time_to"/>
+
+                    </group>
+                    <group>
+                        <field name="faculty_id"/>
+                        <field name="subject_id"/>
+                        <field name="parent_id" invisible="1"/>
+                        <field name="child_id" invisible="1"/>
+                        <!--                        <field name="exam"/>-->
+                    </group>
+                </group>
+                <footer>
+                    <button string="Schedule" class="oe_highlight" type="object" name='action_re_scheduler'/>
+                    <button string="Discard" type="object" special='cancel'/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

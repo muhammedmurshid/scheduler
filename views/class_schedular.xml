@@ -5,8 +5,12 @@
         <field name="model">class.scheduler</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="class_id"/>
+                <field name="class_teacher"/>
                 <field name="course_id"/>
                 <field name="month_of_record"/>
+                <field name="state" widget="badge" decoration-success="state == 'scheduled'"
+                       decoration-danger="state == 'rejected'" decoration-info="state == 'head_approval'"/>
             </tree>
 
         </field>
@@ -18,18 +22,32 @@
         <field name="arch" type="xml">
             <form string="Scheduler">
                 <header>
-                    <button string="Schedule" states="draft" class="oe_highlight"
-                            name="schedule" type="object"/>
+                    <button name="action_head_approval" string="Sent for Approval" class="oe_highlight" type="object"
+                            states="draft" groups="faculty.coordinator_user"/>
+                    <button string="Approve" states="head_approval" class="oe_highlight"
+                            name="schedule" type="object" groups="faculty.group_faculty_administrator"/>
+                    <button string="Reject" states="head_approval"
+                            name="action_reject" type="object" groups="faculty.group_faculty_administrator"/>
+                    <button name="action_print_report" string="Download Time Table For Students" type="object" icon="fa-print"
+                            class="oe_highlight" states="scheduled"/>
+                    <button name="action_pdf_for_faculty" string="Download Faculty Classes" type="object" icon="fa-print" states="scheduled"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
-
+                    <widget name="web_ribbon" title="Scheduled" bg_color="bg-success"
+                            attrs="{'invisible': [('state', '!=', 'scheduled')]}"/>
+                    <widget name="web_ribbon" title="Rejected" bg_color="bg-danger"
+                            attrs="{'invisible': [('state', '!=', 'rejected')]}"/>
                     <group>
                         <group>
-                            <field name="class_teacher"/>
+                            <field name="class_id" options="{'no_create': True}"/>
                             <field name="academic_head"/>
-                            <field name="course_id"/>
+                            <field name="course_id" options="{'no_create': True}"/>
                             <field name="month_of_record"/>
+                        </group>
+                        <group>
+                            <field name="class_teacher"/>
+                            <field name="company_id" invisible="1"/>
                         </group>
                     </group>
                     <notebook position="inside">
@@ -37,6 +55,7 @@
 
                             <field name="record_ids">
                                 <tree string="Records" editable="bottom">
+
                                     <field name="date"/>
                                     <field name="day"/>
                                     <!--                                    <field name="get_day_from_date"/>-->
@@ -44,11 +63,14 @@
                                     <field name="time_to" widget="float_time"/>
                                     <field name="faculty_id"/>
                                     <field name="subject_id"/>
+<!--                                    <button name="re_scheduler" string="Re Schedule" class="oe_highlight"-->
+<!--                                            type="object" invisible="1"/>-->
+                                    <field name="re_scheduled" readonly="1" invisible="1"/>
 
                                 </tree>
                             </field>
                         </page>
-                        <page name="Re Scheduler" string="Re Schedule">
+                        <page name="Re Scheduler" string="Re Schedule" invisible="1">
                             <field name="re_scheduler_ids">
                                 <tree string="Re Schedule" editable="bottom">
                                     <field name="date"/>
@@ -57,6 +79,7 @@
                                     <field name="time_to" widget="float_time"/>
                                     <field name="faculty_id"/>
                                     <field name="subject_id"/>
+                                    <field name="record_id" invisible="1"/>
 
                                 </tree>
                             </field>
@@ -97,5 +120,6 @@
         <field name="view_mode">tree,form,activity</field>
     </record>
     <menuitem name="Class Schedule" id="menu_class_schedular" action="class_schedular_view_action"
+              web_icon="scheduler/static/description/icon.png"
               sequence="4"/>
 </odoo>
