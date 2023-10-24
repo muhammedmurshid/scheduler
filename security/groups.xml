@@ -9,10 +9,10 @@
 <!--        <field name="name">Coordinator</field>-->
 <!--        <field name="category_id" ref="class_scheduler_groups"/>-->
 <!--    </record>-->
-    <record id="scheduler_coordinator_head" model="res.groups">
-        <field name="name">Head</field>
-        <field name="category_id" ref="class_scheduler_groups"/>
-    </record>
+<!--    <record id="scheduler_coordinator_head" model="res.groups">-->
+<!--        <field name="name">Head</field>-->
+<!--        <field name="category_id" ref="class_scheduler_groups"/>-->
+<!--    </record>-->
     <record id="scheduler_admin" model="res.groups">
         <field name="name">HR Manager</field>
         <field name="category_id" ref="class_scheduler_groups"/>

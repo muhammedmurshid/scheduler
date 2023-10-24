@@ -29,7 +29,7 @@ class ClassScheduler(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'), ('head_approval', 'Head Approval'), ('scheduled', 'Scheduled'), ('rejected', 'Rejected')
     ], string='Status', default='draft')
-    class_id = fields.Many2one('logic.base.class', string='Class', required=True)
+    class_id = fields.Many2one('logic.base.class', string='Class', required=True, domain=[('state', '=', 'active')])
 
     def action_head_approval(self):
         for i in self:
