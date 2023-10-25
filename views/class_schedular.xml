@@ -63,6 +63,7 @@
                                     <field name="time_to" widget="float_time"/>
                                     <field name="faculty_id"/>
                                     <field name="subject_id"/>
+                                    <field name="topic"/>
 <!--                                    <button name="re_scheduler" string="Re Schedule" class="oe_highlight"-->
 <!--                                            type="object" invisible="1"/>-->
                                     <field name="re_scheduled" readonly="1" invisible="1"/>

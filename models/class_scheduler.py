@@ -139,6 +139,7 @@ class ClassRecordsScheduler(models.Model):
     faculty_id = fields.Many2one('res.users', string='Faculty', domain=[('faculty_check', '=', True)], required=True)
     subject_id = fields.Many2one('subject.details', string='Subject', required=True)
     exam = fields.Char(string='Exam')
+    topic = fields.Char(string='Topic')
     record_id = fields.Many2one('class.scheduler', string='Class Records')
     get_day_from_date = fields.Char()
     re_scheduled = fields.Boolean(string='Re Scheduled')

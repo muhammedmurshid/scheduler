@@ -6,7 +6,7 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">scheduler.report_students_time_table</field>
         <field name="report_file">scheduler.report_students_time_table</field>
-        <field name="print_report_name">'Scheduler - %s' % (object.name)</field>
+        <field name="print_report_name">'Scheduler - %s' % (object.class_id.name)</field>
         <field name="binding_model_id" ref="model_class_scheduler"/>
     </record>
     <report
@@ -92,6 +92,9 @@
                                 <th class="text-center">
                                     <span>Subject</span>
                                 </th>
+                                <th class="text-center">
+                                    <span>Topic</span>
+                                </th>
 
                             </tr>
                         </thead>
@@ -115,6 +118,9 @@
                                     </td>
                                     <td>
                                         <span t-field="o.subject_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.topic"/>
                                     </td>
                                 </tr>
                             </t>
@@ -199,6 +205,9 @@
                                 <th class="text-center">
                                     <span>Subject</span>
                                 </th>
+                                <th class="text-center">
+                                    <span>Topic</span>
+                                </th>
 
                             </tr>
                         </thead>
@@ -223,6 +232,9 @@
                                         </td>
                                         <td>
                                             <span t-field="o.subject_id.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.topic"/>
                                         </td>
                                     </tr>
                                 </t>
