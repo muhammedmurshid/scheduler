@@ -46,13 +46,13 @@ class ClassScheduler(models.Model):
         self.state = 'rejected'
 
     def schedule(self):
-        activity_id = self.env['mail.activity'].search(
+        activity_id = self.env['mail.activity'].sudo().search(
             [('res_id', '=', self.id), ('user_id', '=', self.env.user.id), (
                 'activity_type_id', '=', self.env.ref('scheduler.mail_class_scheduler_for_heads').id)])
         activity_id.action_feedback(feedback=f'Class schedule Approved.')
         self.state = 'scheduled'
         abc = []
-        ww = self.env['faculty.details'].search([])
+        ww = self.env['faculty.details'].sudo().search([])
         for jj in ww:
             for i in self.record_ids:
                 print(i.day, 'iday')
