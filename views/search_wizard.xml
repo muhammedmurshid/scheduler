@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="search_faculty_time_tables" model="ir.ui.view">
+        <field name="name">Scheduled Classes</field>
+        <field name="model">search.class.timetable</field>
+        <field name="arch" type="xml">
+            <form string="Classes">
+                <group>
+                    <group class="oe_title">
+                        <field name="faculty_id"/>
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                    </group>
+                    <group>
+                        <!--                        <field name="record_ids" widget="many2many_tags"/>-->
+                    </group>
+                </group>
+                <footer>
+                    <button string="Done" class="oe_highlight" type="object"
+                            name='action_search_inbetween_datas'/>
+                    <button string="Discard" type="object" special='cancel'/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="search_model_faculty_time_table" model="ir.actions.act_window">
+        <field name="name">Scheduled Classes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">search.class.timetable</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="search_faculty_time_tables"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Print Faculty Classes"
+              id="faculty_time_table_menu"
+              action="search_model_faculty_time_table"
+              parent="menu_class_schedular"
+              sequence="4"/>
+
+    <record id="inbetween_dates_time_table_for_faculty" model="ir.actions.report">
+        <field name="name">Faculty Classes</field>
+        <field name="model">search.class.timetable</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scheduler.timetable_for_faculty_inbetween_dates</field>
+        <field name="binding_model_id" ref="model_search_class_timetable"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="scheduler.timetable_for_faculty_inbetween_dates">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div style="margin: 20px;">
+                        <h3>
+                            <strong>Faculty:</strong>
+                            <span t-esc="faculty" style="color:#ad8f5a"/>
+                        </h3>
+
+                        <strong>From Date:</strong>
+                        <span t-esc="from_date" style="color:#acd177"/>
+                        <br/>
+                        <strong>To Date:</strong>
+                        <span t-esc="to_date" style="color:#acd177"/>
+                    </div>
+                    <div>
+                        <h2 align="center">Classes</h2>
+                        <br/>
+                        <table class="table table-bordered mt32">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Day</th>
+                                    <th>Batch</th>
+                                    <th>Branch</th>
+                                    <th>Subject</th>
+                                    <th>Topic</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="report" t-as="a">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="a['date']">
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span t-esc="a['day']">
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span t-esc="a['batch']">
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span t-esc="a['branch']">
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span t-esc="a['subject']">
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span t-esc="a['topic']">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

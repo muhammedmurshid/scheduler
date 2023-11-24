@@ -51,19 +51,23 @@
                         </group>
                     </group>
                     <notebook position="inside">
-                        <page name="Records" string="Schedule">
+                        <page name="Records" string="Tutor Session">
 
-                            <field name="record_ids">
-                                <tree string="Records" editable="bottom">
+                            <field name="record_ids" context="{'default_month_of_record': month_of_record}">
+                                <tree string="Records" editable="bottom" >
 
                                     <field name="date"/>
                                     <field name="day"/>
+                                     <field name="batch_id"/>
+                                    <field name="branch_id"/>
                                     <!--                                    <field name="get_day_from_date"/>-->
                                     <field name="time_from" widget="float_time"/>
                                     <field name="time_to" widget="float_time"/>
                                     <field name="faculty_id"/>
                                     <field name="subject_id"/>
                                     <field name="topic"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="month_of_record" invisible="1"/>
 <!--                                    <button name="re_scheduler" string="Re Schedule" class="oe_highlight"-->
 <!--                                            type="object" invisible="1"/>-->
                                     <field name="re_scheduled" readonly="1" invisible="1"/>
@@ -76,6 +80,7 @@
                                 <tree string="Re Schedule" editable="bottom">
                                     <field name="date"/>
                                     <field name="day"/>
+
                                     <field name="time_from" widget="float_time"/>
                                     <field name="time_to" widget="float_time"/>
                                     <field name="faculty_id"/>
@@ -85,8 +90,17 @@
                                 </tree>
                             </field>
                         </page>
-                        <page name="Off Days" string="Holidays">
 
+                        <page name="value_added_session" string="Value Added Session">
+                            <field name="value_session_ids">
+                                <tree string="Value Added Session" editable="bottom">
+                                    <field name="date"/>
+                                    <field name="program"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page name="Off Days" string="Holidays">
                             <field name="reason_ids">
                                 <tree string="Holidays" editable="bottom">
                                     <field name="date"/>
@@ -95,6 +109,10 @@
                                 </tree>
                             </field>
                         </page>
+                        <page name="non_curricular_activities" string="Non Curricular Activities">
+                                <field name="non_curricular_activities"/>
+                        </page>
+
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">

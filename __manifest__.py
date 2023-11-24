@@ -2,7 +2,7 @@
     'name': "Class Scheduler",
     'version': "14.0.1.0",
     'sequence': "0",
-    'depends': ['base', 'mail', 'faculty'],
+    'depends': ['base', 'mail', 'faculty', 'logic_base'],
     'data': [
         'security/groups.xml',
         'security/ir.model.access.csv',
@@ -12,6 +12,8 @@
         'views/class_pdf_report.xml',
         'views/faculty_wizard.xml',
         'data/activity.xml',
+        'views/search_wizard.xml',
+
     ],
     'demo': [],
     'summary': "logic_class_scheduler",

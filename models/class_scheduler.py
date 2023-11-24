@@ -28,8 +28,10 @@ class ClassScheduler(models.Model):
     reason_ids = fields.One2many('off.day.reasons', 'reason_id', string='Reason')
     state = fields.Selection([
         ('draft', 'Draft'), ('head_approval', 'Head Approval'), ('scheduled', 'Scheduled'), ('rejected', 'Rejected')
-    ], string='Status', default='draft')
+    ], string='Status', default='draft', tracking=True)
     class_id = fields.Many2one('logic.base.class', string='Class', required=True, domain=[('state', '=', 'active')])
+    non_curricular_activities = fields.Html(string='Non Curricular Activities')
+    value_session_ids = fields.One2many('value.added.sessions', 'value_session_id', string='Value Session')
 
     def action_head_approval(self):
         for i in self:
@@ -44,6 +46,8 @@ class ClassScheduler(models.Model):
                 'activity_type_id', '=', self.env.ref('scheduler.mail_class_scheduler_for_heads').id)])
         activity_id.action_feedback(feedback=f'Class schedule Rejected.')
         self.state = 'rejected'
+        for j in self.record_ids:
+            j.state = 'rejected'
 
     def schedule(self):
         activity_id = self.env['mail.activity'].sudo().search(
@@ -69,6 +73,8 @@ class ClassScheduler(models.Model):
                     }
                     abc.append((0, 0, res_list))
                     jj.scheduled_ids = abc
+        for j in self.record_ids:
+            j.state = 'scheduled'
 
     time_table = fields.Binary(string="Excel Report")
     company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True,
@@ -108,23 +114,24 @@ class ClassScheduler(models.Model):
             'context': {'default_record_id': self.id}
         }
 
-        # template = self.env.ref('scheduler.month_time_table_for_faculty')
-        # html_content = template._render_qweb_pdf([self.id])[0]
-        # outfile = open('/tmp/temp.pdf', 'wb')
-        # outfile.write(html_content)
-        # outfile.close()
-        #
-        # open('/tmp/temp.docx', 'w')
-        # parse('/tmp/temp.pdf', '/tmp/temp.docx')
-        # self.excel_file = base64.b64encode(open('/tmp/temp.pdf', 'rb').read())
-        # return {
-        #     'name': 'Time Table For Faculty',
-        #     'type': 'ir.actions.act_url',
-        #     'url': '/web/content/?model=class.scheduler&id={}&field=excel_file&filename_field=filename&download=true'.format(
-        #         self.id
-        #     ),
-        #     'target': 'self',
-        # }
+    # @api.onchange('state')
+    # def onchange_state(self):
+    #     print('lllstate', self.state)
+    #     for rec in self.record_ids:
+    #         if self.state == 'draft':
+    #             print('draft')
+    #             rec.state = 'draft'
+    #         if self.state == 'head_approval':
+    #             print('head_approval')
+    #             rec.state = 'head_approval'
+    #         if self.state == 'scheduled':
+    #             print('scheduled')
+    #             rec.state = 'scheduled'
+    #         if self.state == 'rejected':
+    #             print('rejected')
+    #             rec.state = 'rejected'
+    #         else:
+    #             print('else')
 
 
 class ClassRecordsScheduler(models.Model):
@@ -140,9 +147,18 @@ class ClassRecordsScheduler(models.Model):
     subject_id = fields.Many2one('subject.details', string='Subject', required=True)
     exam = fields.Char(string='Exam')
     topic = fields.Char(string='Topic')
+    state = fields.Selection([
+        ('draft', 'Draft'), ('head_approval', 'Head Approval'), ('scheduled', 'Scheduled'), ('rejected', 'Rejected')
+    ], string='Status', default='draft')
     record_id = fields.Many2one('class.scheduler', string='Class Records')
     get_day_from_date = fields.Char()
     re_scheduled = fields.Boolean(string='Re Scheduled')
+    batch_id = fields.Many2one('logic.base.batch', string='Batch')
+    branch_id = fields.Many2one('logic.base.branches', string='Branch', related='batch_id.branch_id')
+    month_of_record = fields.Selection([
+        ('1', 'January'), ('2', 'February'), ('3', 'March'), ('4', 'April'), ('5', 'May'), ('6', 'June'), ('7', 'July'),
+        ('8', 'August'), ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December')],
+        string='Month')
 
     @api.onchange('date')
     def get_day_from_date(self):
@@ -227,3 +243,13 @@ class OffDayReasons(models.Model):
     date = fields.Date(string='Date', required=True)
     reason = fields.Text(string='Reason')
     reason_id = fields.Many2one('class.scheduler', string='Class Records')
+
+
+class ValueAddedSessions(models.Model):
+    _name = 'value.added.sessions'
+    _description = 'Value Added Sessions'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+
+    date = fields.Date(string='Date', required=True)
+    program = fields.Char(string='Program')
+    value_session_id = fields.Many2one('class.scheduler', string='Class Records')
