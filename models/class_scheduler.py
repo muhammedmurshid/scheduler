@@ -31,6 +31,7 @@ class ClassScheduler(models.Model):
     ], string='Status', default='draft', tracking=True)
     class_id = fields.Many2one('logic.base.class', string='Class', required=True, domain=[('state', '=', 'active')])
     non_curricular_activities = fields.Html(string='Non Curricular Activities')
+    exam_ids = fields.One2many('exam.day.schedule', 'exam_id', string='Exam Details')
     value_session_ids = fields.One2many('value.added.sessions', 'value_session_id', string='Value Session')
 
     def action_head_approval(self):
@@ -253,3 +254,13 @@ class ValueAddedSessions(models.Model):
     date = fields.Date(string='Date', required=True)
     program = fields.Char(string='Program')
     value_session_id = fields.Many2one('class.scheduler', string='Class Records')
+
+
+class ExamDaySchedule(models.Model):
+    _name = 'exam.day.schedule'
+    _description = 'Exam'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+
+    date = fields.Date(string='Date', required=True)
+    topic = fields.Text(string='Topic')
+    exam_id = fields.Many2one('class.scheduler', string='Class Records')

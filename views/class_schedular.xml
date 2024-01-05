@@ -109,6 +109,16 @@
                                 </tree>
                             </field>
                         </page>
+
+                        <page name="Exam" string="exam">
+                            <field name="exam_ids">
+                                <tree string="Exam" editable="bottom">
+                                    <field name="date"/>
+                                    <field name="topic"/>
+
+                                </tree>
+                            </field>
+                        </page>
                         <page name="non_curricular_activities" string="Non Curricular Activities">
                                 <field name="non_curricular_activities"/>
                         </page>
